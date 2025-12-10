@@ -17,10 +17,11 @@ public partial class Tools
         ReadOnly = true,
         Idempotent = true,
         Destructive = false),
-        Description("Lists all tables in the SQL Database.")]
-    public async Task<DbOperationResult> ListTables()
+        Description("Lists all tables in a SQL database. Specify the database parameter to query a specific database (e.g., adgilecloud, adgiledigital, adgileportal, totaltv). Use ListDatabases first to see available databases.")]
+    public async Task<DbOperationResult> ListTables(
+        [Description("Target database name (e.g., adgilecloud, adgiledigital, adgileportal, totaltv). Required to query the correct database.")] string? database = null)
     {
-        var conn = await _connectionFactory.GetOpenConnectionAsync();
+        var conn = await _connectionFactory.GetOpenConnectionAsync(database);
         try
         {
             using (conn)

@@ -13,11 +13,12 @@ public partial class Tools
         Title = "Update Data",
         ReadOnly = false,
         Destructive = true),
-        Description("Updates data in a table in the SQL Database. Expects a valid UPDATE SQL statement as input.")]
+        Description("Updates data in a table in a SQL database. Specify the database parameter to update in the correct database.")]
     public async Task<DbOperationResult> UpdateData(
-        [Description("UPDATE SQL statement")] string sql)
+        [Description("UPDATE SQL statement")] string sql,
+        [Description("Target database name (e.g., adgilecloud, adgiledigital, adgileportal, totaltv). Required to update in the correct database.")] string? database = null)
     {
-        var conn = await _connectionFactory.GetOpenConnectionAsync();
+        var conn = await _connectionFactory.GetOpenConnectionAsync(database);
         try
         {
             using (conn)

@@ -14,11 +14,12 @@ public partial class Tools
         ReadOnly = true,
         Idempotent = true,
         Destructive = false),
-        Description("Executes SQL queries against SQL Database to read data")]
+        Description("Executes a SELECT query against a SQL database and returns the results. Specify the database parameter to target the correct database (e.g., adgilecloud, adgiledigital, adgileportal, totaltv).")]
     public async Task<DbOperationResult> ReadData(
-        [Description("SQL query to execute")] string sql)
+        [Description("SQL SELECT query to execute")] string sql,
+        [Description("Target database name (e.g., adgilecloud, adgiledigital, adgileportal, totaltv). Required to query the correct database.")] string? database = null)
     {
-        var conn = await _connectionFactory.GetOpenConnectionAsync();
+        var conn = await _connectionFactory.GetOpenConnectionAsync(database);
         try
         {
             using (conn)

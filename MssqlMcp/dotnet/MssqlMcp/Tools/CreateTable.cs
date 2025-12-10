@@ -13,11 +13,12 @@ public partial class Tools
         Title = "Create Table",
         ReadOnly = false,
         Destructive = false),
-        Description("Creates a new table in the SQL Database. Expects a valid CREATE TABLE SQL statement as input.")]
+        Description("Creates a new table in a SQL database. Specify the database parameter to create the table in the correct database.")]
     public async Task<DbOperationResult> CreateTable(
-        [Description("CREATE TABLE SQL statement")] string sql)
+        [Description("CREATE TABLE SQL statement")] string sql,
+        [Description("Target database name (e.g., adgilecloud, adgiledigital, adgileportal, totaltv). Required to create table in the correct database.")] string? database = null)
     {
-        var conn = await _connectionFactory.GetOpenConnectionAsync();
+        var conn = await _connectionFactory.GetOpenConnectionAsync(database);
         try
         {
             using (conn)

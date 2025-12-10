@@ -13,11 +13,12 @@ public partial class Tools
         Title = "Drop Table",
         ReadOnly = false,
         Destructive = true),
-        Description("Drops a table in the SQL Database. Expects a valid DROP TABLE SQL statement as input.")]
+        Description("Drops a table from a SQL database. Specify the database parameter to drop from the correct database.")]
     public async Task<DbOperationResult> DropTable(
-        [Description("DROP TABLE SQL statement")] string sql)
+        [Description("DROP TABLE SQL statement")] string sql,
+        [Description("Target database name (e.g., adgilecloud, adgiledigital, adgileportal, totaltv). Required to drop from the correct database.")] string? database = null)
     {
-        var conn = await _connectionFactory.GetOpenConnectionAsync();
+        var conn = await _connectionFactory.GetOpenConnectionAsync(database);
         try
         {
             using (conn)

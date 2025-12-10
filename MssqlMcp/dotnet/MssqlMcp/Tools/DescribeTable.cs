@@ -15,9 +15,10 @@ public partial class Tools
         ReadOnly = true,
         Idempotent = true,
         Destructive = false),
-        Description("Returns table schema")]
+        Description("Returns detailed schema information for a table including columns, indexes, constraints, and foreign keys. Specify the database parameter to target the correct database.")]
     public async Task<DbOperationResult> DescribeTable(
-        [Description("Name of table")] string name)
+        [Description("Table name, optionally with schema prefix (e.g., 'Users' or 'dbo.Users')")] string name,
+        [Description("Target database name (e.g., adgilecloud, adgiledigital, adgileportal, totaltv). Required to query the correct database.")] string? database = null)
     {
         string? schema = null;
         if (name.Contains('.'))
@@ -89,7 +90,7 @@ JOIN
 GROUP BY
     fk.name, tp.schema_id, tp.name, tr.schema_id, tr.name;
 ";
-        var conn = await _connectionFactory.GetOpenConnectionAsync();
+        var conn = await _connectionFactory.GetOpenConnectionAsync(database);
         try
         {
             using (conn)

@@ -7,9 +7,16 @@ namespace Mssql.McpServer;
 
 public class SqlConnectionFactory : ISqlConnectionFactory
 {
-    public async Task<SqlConnection> GetOpenConnectionAsync()
+    public async Task<SqlConnection> GetOpenConnectionAsync(string? database = null)
     {
         var connectionString = GetConnectionString();
+
+        if (!string.IsNullOrEmpty(database))
+        {
+            var builder = new SqlConnectionStringBuilder(connectionString);
+            builder.InitialCatalog = database;
+            connectionString = builder.ConnectionString;
+        }
 
         // Let ADO.Net handle connection pooling
         var conn = new SqlConnection(connectionString);
@@ -22,7 +29,7 @@ public class SqlConnectionFactory : ISqlConnectionFactory
         var connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
 
         return string.IsNullOrEmpty(connectionString)
-            ? throw new InvalidOperationException("Connection string is not set in the environment variable 'CONNECTION_STRING'.\n\nHINT: Have a local SQL Server, with a database called 'test', from console, run `SET CONNECTION_STRING=Server=.;Database=test;Trusted_Connection=True;TrustServerCertificate=True` and the load the .sln file")
+            ? throw new InvalidOperationException("Connection string is not set in the environment variable 'CONNECTION_STRING'.")
             : connectionString;
     }
 }

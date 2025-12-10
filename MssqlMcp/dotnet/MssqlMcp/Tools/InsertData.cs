@@ -13,11 +13,12 @@ public partial class Tools
         Title = "Insert Data",
         ReadOnly = false,
         Destructive = false),
-        Description("Updates data in a table in the SQL Database. Expects a valid INSERT SQL statement as input. ")]
+        Description("Inserts data into a table in a SQL database. Specify the database parameter to insert into the correct database.")]
     public async Task<DbOperationResult> InsertData(
-        [Description("INSERT SQL statement")] string sql)
+        [Description("INSERT SQL statement")] string sql,
+        [Description("Target database name (e.g., adgilecloud, adgiledigital, adgileportal, totaltv). Required to insert into the correct database.")] string? database = null)
     {
-        var conn = await _connectionFactory.GetOpenConnectionAsync();
+        var conn = await _connectionFactory.GetOpenConnectionAsync(database);
         try
         {
             using (conn)

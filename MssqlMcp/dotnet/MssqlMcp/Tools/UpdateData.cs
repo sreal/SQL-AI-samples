@@ -18,6 +18,11 @@ public partial class Tools
         [Description("UPDATE SQL statement")] string sql,
         [Description("Target database name (e.g., adgilecloud, adgiledigital, adgileportal, totaltv). Required to update in the correct database.")] string? database = null)
     {
+        if (IsReadOnlyMode)
+        {
+            return new DbOperationResult(success: false, error: "UPDATE operation is not allowed in READONLY mode");
+        }
+
         var conn = await _connectionFactory.GetOpenConnectionAsync(database);
         try
         {

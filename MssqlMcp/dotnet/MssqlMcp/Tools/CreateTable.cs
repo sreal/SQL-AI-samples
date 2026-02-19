@@ -18,6 +18,11 @@ public partial class Tools
         [Description("CREATE TABLE SQL statement")] string sql,
         [Description("Target database name (e.g., adgilecloud, adgiledigital, adgileportal, totaltv). Required to create table in the correct database.")] string? database = null)
     {
+        if (IsReadOnlyMode)
+        {
+            return new DbOperationResult(success: false, error: "CREATE TABLE operation is not allowed in READONLY mode");
+        }
+
         var conn = await _connectionFactory.GetOpenConnectionAsync(database);
         try
         {

@@ -17,7 +17,7 @@ public partial class Tools
         ReadOnly = true,
         Idempotent = true,
         Destructive = false),
-        Description("Lists all available databases on the SQL Server. Call this first to discover database names like adgilecloud, adgiledigital, adgileportal, totaltv, etc. Use the returned database names with other tools via the 'database' parameter.")]
+        Description("Lists all available databases on the SQL Server. Call this first to discover database names. Use the returned database names with other tools via the 'database' parameter.")]
     public async Task<DbOperationResult> ListDatabases()
     {
         try

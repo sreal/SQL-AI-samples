@@ -16,7 +16,7 @@ public partial class Tools
         Description("Creates a new table in a SQL database. Specify the database parameter to create the table in the correct database.")]
     public async Task<DbOperationResult> CreateTable(
         [Description("CREATE TABLE SQL statement")] string sql,
-        [Description("Target database name (e.g., adgilecloud, adgiledigital, adgileportal, totaltv). Required to create table in the correct database.")] string? database = null)
+        [Description("Target database name. Required to create table in the correct database. Use ListDatabases to discover available names.")] string? database = null)
     {
         if (IsReadOnlyMode)
         {

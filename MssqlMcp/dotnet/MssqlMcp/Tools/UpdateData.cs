@@ -16,7 +16,7 @@ public partial class Tools
         Description("Updates data in a table in a SQL database. Specify the database parameter to update in the correct database.")]
     public async Task<DbOperationResult> UpdateData(
         [Description("UPDATE SQL statement")] string sql,
-        [Description("Target database name (e.g., adgilecloud, adgiledigital, adgileportal, totaltv). Required to update in the correct database.")] string? database = null)
+        [Description("Target database name. Required to update in the correct database. Use ListDatabases to discover available names.")] string? database = null)
     {
         if (IsReadOnlyMode)
         {

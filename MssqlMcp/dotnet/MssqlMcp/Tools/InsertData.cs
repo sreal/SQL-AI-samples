@@ -16,7 +16,7 @@ public partial class Tools
         Description("Inserts data into a table in a SQL database. Specify the database parameter to insert into the correct database.")]
     public async Task<DbOperationResult> InsertData(
         [Description("INSERT SQL statement")] string sql,
-        [Description("Target database name (e.g., adgilecloud, adgiledigital, adgileportal, totaltv). Required to insert into the correct database.")] string? database = null)
+        [Description("Target database name. Required to insert into the correct database. Use ListDatabases to discover available names.")] string? database = null)
     {
         if (IsReadOnlyMode)
         {

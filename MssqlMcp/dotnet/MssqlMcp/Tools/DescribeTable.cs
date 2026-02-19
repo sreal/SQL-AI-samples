@@ -18,7 +18,7 @@ public partial class Tools
         Description("Returns detailed schema information for a table including columns, indexes, constraints, and foreign keys. Specify the database parameter to target the correct database.")]
     public async Task<DbOperationResult> DescribeTable(
         [Description("Table name, optionally with schema prefix (e.g., 'Users' or 'dbo.Users')")] string name,
-        [Description("Target database name (e.g., adgilecloud, adgiledigital, adgileportal, totaltv). Required to query the correct database.")] string? database = null)
+        [Description("Target database name. Required to query the correct database. Use ListDatabases to discover available names.")] string? database = null)
     {
         string? schema = null;
         if (name.Contains('.'))

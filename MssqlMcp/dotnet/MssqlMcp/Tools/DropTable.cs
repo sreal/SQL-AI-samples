@@ -16,7 +16,7 @@ public partial class Tools
         Description("Drops a table from a SQL database. Specify the database parameter to drop from the correct database.")]
     public async Task<DbOperationResult> DropTable(
         [Description("DROP TABLE SQL statement")] string sql,
-        [Description("Target database name (e.g., adgilecloud, adgiledigital, adgileportal, totaltv). Required to drop from the correct database.")] string? database = null)
+        [Description("Target database name. Required to drop from the correct database. Use ListDatabases to discover available names.")] string? database = null)
     {
         if (IsReadOnlyMode)
         {
